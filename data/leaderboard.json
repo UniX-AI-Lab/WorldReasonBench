@@ -1,0 +1,41 @@
+{
+  "metric_descriptions": {
+    "score_pr": "Process-aware Reasoning Score: Acc_QA^0.8 * s_dyn^0.2 (higher is better)",
+    "sv": "Multi-dimensional Quality Score: 0.4 * s_r + 0.3 * s_c + 0.3 * s_a (0-100, higher is better)"
+  },
+  "models": [
+    { "name": "Sora2",              "family": "closed",
+      "score_pr": { "overall": 34.3, "wk": 36.9, "hc": 44.7, "lr": 25.9, "ib": 37.3 },
+      "sv":       { "overall": 56.9, "wk": 62.6, "hc": 76.7, "lr": 43.0, "ib": 58.0 } },
+    { "name": "Kling",              "family": "closed",
+      "score_pr": { "overall": 32.7, "wk": 42.2, "hc": 32.5, "lr": 22.4, "ib": 35.7 },
+      "sv":       { "overall": 55.4, "wk": 72.0, "hc": 87.2, "lr": 37.3, "ib": 48.8 } },
+    { "name": "Wan2.6",             "family": "closed",
+      "score_pr": { "overall": 32.4, "wk": 35.2, "hc": 34.5, "lr": 26.2, "ib": 35.5 },
+      "sv":       { "overall": 50.3, "wk": 61.8, "hc": 64.2, "lr": 42.3, "ib": 42.6 } },
+    { "name": "Seedance2.0",        "family": "closed",
+      "score_pr": { "overall": 39.8, "wk": 43.2, "hc": 35.9, "lr": 31.7, "ib": 47.6 },
+      "sv":       { "overall": 59.4, "wk": 70.4, "hc": 83.9, "lr": 56.7, "ib": 42.5 } },
+    { "name": "Veo3.1-Fast",        "family": "closed",
+      "score_pr": { "overall": 35.3, "wk": 55.0, "hc": 35.1, "lr": 25.7, "ib": 28.6 },
+      "sv":       { "overall": 54.8, "wk": 80.1, "hc": 77.2, "lr": 31.5, "ib": 47.2 } },
+    { "name": "LTX2.3",             "family": "open",
+      "score_pr": { "overall": 16.8, "wk": 15.6, "hc": 19.3, "lr": 11.9, "ib": 22.7 },
+      "sv":       { "overall": 28.1, "wk": 35.1, "hc": 27.8, "lr": 24.7, "ib": 25.8 } },
+    { "name": "Wan2.2-14B",         "family": "open",
+      "score_pr": { "overall": 17.5, "wk": 22.9, "hc": 14.5, "lr": 16.4, "ib": 15.0 },
+      "sv":       { "overall": 30.0, "wk": 39.4, "hc": 38.1, "lr": 19.5, "ib": 30.5 } },
+    { "name": "UniVideo",           "family": "open",
+      "score_pr": { "overall": 14.4, "wk": 13.8, "hc": 15.8, "lr": 11.2, "ib": 17.3 },
+      "sv":       { "overall": 21.3, "wk": 29.4, "hc": 37.2, "lr": 14.4, "ib": 16.0 } },
+    { "name": "HunyuanVideo-1.5",   "family": "open",
+      "score_pr": { "overall": 17.9, "wk": 21.6, "hc":  8.1, "lr": 12.7, "ib": 24.2 },
+      "sv":       { "overall": 27.0, "wk": 37.7, "hc": 35.3, "lr": 19.8, "ib": 22.5 } },
+    { "name": "Cosmos-Predict2.5",  "family": "open",
+      "score_pr": { "overall": 16.9, "wk": 15.2, "hc": 22.2, "lr":  7.1, "ib": 24.7 },
+      "sv":       { "overall": 30.5, "wk": 40.8, "hc": 30.8, "lr": 26.7, "ib": 26.1 } },
+    { "name": "LongCat-Video",      "family": "open",
+      "score_pr": { "overall": 17.4, "wk": 13.3, "hc": 22.8, "lr": 12.6, "ib": 22.8 },
+      "sv":       { "overall": 25.3, "wk": 35.1, "hc": 42.8, "lr": 16.3, "ib": 20.2 } }
+  ]
+}

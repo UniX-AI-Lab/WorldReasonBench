@@ -1,0 +1,332 @@
+/* ============================================================
+   WorldReasonBench project page
+   - Reveal-on-scroll
+   - Stat counters
+   - Sortable + filterable Leaderboard
+   - Qualitative dim tabs (placeholder videos)
+   - BibTeX copy
+   - Sticky nav scroll state
+   ============================================================ */
+
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------
+   * 1. Sticky nav scroll state
+   * ------------------------------------------------------------ */
+  const nav = document.getElementById('topnav');
+  const onScroll = () => {
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ------------------------------------------------------------
+   * 2. Reveal-on-scroll
+   * ------------------------------------------------------------ */
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('visible'));
+  }
+
+  /* ------------------------------------------------------------
+   * 3. Animated stat counters
+   * ------------------------------------------------------------ */
+  const counters = document.querySelectorAll('.stat-num[data-target]');
+  const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+  const animateCounter = (el) => {
+    const target = parseInt(el.getAttribute('data-target'), 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1400;
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const v = Math.floor(easeOutQuart(t) * target);
+      el.textContent = v.toLocaleString() + (t === 1 ? suffix : '');
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window) {
+    const cio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            animateCounter(e.target);
+            cio.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((c) => cio.observe(c));
+  } else {
+    counters.forEach((c) => animateCounter(c));
+  }
+
+  /* ------------------------------------------------------------
+   * 4. Leaderboard
+   * ------------------------------------------------------------ */
+  const lbState = {
+    metric: 'score_pr',     // 'score_pr' or 'sv'
+    family: 'all',          // 'all' / 'closed' / 'open'
+    sortKey: 'overall',     // 'overall' / 'wk' / 'hc' / 'lr' / 'ib' / 'model' / 'family' / 'rank'
+    sortDir: 'desc',        // 'asc' or 'desc'
+    search: '',
+    models: []
+  };
+
+  const tbody = document.getElementById('lb-tbody');
+  const table = document.getElementById('lb-table');
+
+  const dimColumns = [
+    { key: 'overall', label: 'Overall' },
+    { key: 'wk',      label: 'World Knowledge' },
+    { key: 'hc',      label: 'Human-Centric' },
+    { key: 'lr',      label: 'Logic Reasoning' },
+    { key: 'ib',      label: 'Information-Based' }
+  ];
+
+  const fmt = (v) => (typeof v === 'number' ? v.toFixed(1) : '--');
+
+  function getValue(model, key) {
+    if (key === 'model') return model.name.toLowerCase();
+    if (key === 'family') return model.family;
+    if (key === 'rank') return model._rank;
+    return model[lbState.metric][key];
+  }
+
+  function rankDescBy(arr, key) {
+    return [...arr].sort((a, b) => {
+      const va = getValue(a, key);
+      const vb = getValue(b, key);
+      if (typeof va === 'string') return va.localeCompare(vb);
+      return vb - va;
+    });
+  }
+
+  function computeBestPerColumn(models) {
+    // compute first / second-best across the CURRENTLY VISIBLE models for each dim
+    const best = {};
+    dimColumns.forEach((c) => {
+      const sorted = rankDescBy(models, c.key);
+      best[c.key] = {
+        first: sorted[0] ? getValue(sorted[0], c.key) : null,
+        second: sorted[1] ? getValue(sorted[1], c.key) : null
+      };
+    });
+    return best;
+  }
+
+  function applyFilters(allModels) {
+    return allModels.filter((m) => {
+      if (lbState.family !== 'all' && m.family !== lbState.family) return false;
+      if (lbState.search && !m.name.toLowerCase().includes(lbState.search)) return false;
+      return true;
+    });
+  }
+
+  function applySort(filtered) {
+    const sorted = [...filtered].sort((a, b) => {
+      const va = getValue(a, lbState.sortKey);
+      const vb = getValue(b, lbState.sortKey);
+      if (typeof va === 'string') {
+        return lbState.sortDir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+      }
+      return lbState.sortDir === 'asc' ? va - vb : vb - va;
+    });
+    return sorted;
+  }
+
+  function renderTable() {
+    // 1. assign overall rank from the FULL set (so a hidden filter doesn't change
+    //    the rank number people see)
+    const rankedAll = rankDescBy(lbState.models, 'overall');
+    rankedAll.forEach((m, i) => { m._rank = i + 1; });
+
+    // 2. filter -> sort
+    const filtered = applyFilters(lbState.models);
+    const best = computeBestPerColumn(filtered);
+    const sorted = applySort(filtered);
+
+    // 3. render rows
+    tbody.innerHTML = '';
+    sorted.forEach((m, i) => {
+      const tr = document.createElement('tr');
+      tr.classList.add('lb-row-anim');
+      tr.style.animationDelay = (i * 18) + 'ms';
+
+      const familyBadge = m.family === 'closed'
+        ? '<span class="fam-badge fam-closed"><span class="fam-dot"></span>Closed</span>'
+        : '<span class="fam-badge fam-open"><span class="fam-dot"></span>Open</span>';
+
+      let html =
+        '<td class="col-rank">' + m._rank + '</td>' +
+        '<td class="col-model">' + escapeHtml(m.name) + '</td>' +
+        '<td class="col-family">' + familyBadge + '</td>';
+
+      dimColumns.forEach((c) => {
+        const v = getValue(m, c.key);
+        let cls = 'col-num';
+        if (v === best[c.key].first && v !== null)        cls += ' is-best';
+        else if (v === best[c.key].second && v !== null)  cls += ' is-second';
+        html += '<td class="' + cls + '">' + fmt(v) + '</td>';
+      });
+
+      tr.innerHTML = html;
+      tbody.appendChild(tr);
+    });
+
+    // 4. highlight active sort column header
+    table.querySelectorAll('thead th').forEach((th) => {
+      th.classList.remove('is-active', 'asc');
+      if (th.getAttribute('data-sort') === lbState.sortKey) {
+        th.classList.add('is-active');
+        if (lbState.sortDir === 'asc') th.classList.add('asc');
+      }
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  // --- bind controls ---
+  document.querySelectorAll('.lb-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lb-tab').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      lbState.metric = btn.getAttribute('data-metric');
+      renderTable();
+    });
+  });
+
+  document.querySelectorAll('.lb-chip').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lb-chip').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      lbState.family = btn.getAttribute('data-family');
+      renderTable();
+    });
+  });
+
+  table.querySelectorAll('thead th').forEach((th) => {
+    th.addEventListener('click', () => {
+      const key = th.getAttribute('data-sort');
+      if (lbState.sortKey === key) {
+        lbState.sortDir = lbState.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        lbState.sortKey = key;
+        lbState.sortDir = (key === 'model' || key === 'family') ? 'asc' : 'desc';
+      }
+      renderTable();
+    });
+  });
+
+  const searchInput = document.getElementById('lb-search-input');
+  searchInput.addEventListener('input', (e) => {
+    lbState.search = e.target.value.trim().toLowerCase();
+    renderTable();
+  });
+
+  // --- load data ---
+  fetch('data/leaderboard.json', { cache: 'no-cache' })
+    .then((r) => r.json())
+    .then((data) => {
+      lbState.models = data.models;
+      renderTable();
+    })
+    .catch((err) => {
+      console.error('Leaderboard load failed', err);
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:#777e9a;">Could not load leaderboard data.</td></tr>';
+    });
+
+  /* ------------------------------------------------------------
+   * 5. Qualitative dimension tabs (placeholder videos)
+   * ------------------------------------------------------------ */
+  const videoData = {
+    wk: [
+      { title: 'A balloon released indoors rises and rests against the ceiling.',  cat: 'World Knowledge' },
+      { title: 'Ice cubes drop into hot water and gradually melt away.',            cat: 'World Knowledge' },
+      { title: 'A spinning top slowly loses momentum and falls over.',              cat: 'World Knowledge' }
+    ],
+    hc: [
+      { title: 'Two people shake hands and then exchange a written document.',     cat: 'Human-Centric' },
+      { title: 'A pianist plays a chord; the keys depress in synchronised order.', cat: 'Human-Centric' },
+      { title: 'A child reaches for a cup; the parent catches it before it tips.', cat: 'Human-Centric' }
+    ],
+    lr: [
+      { title: 'Three numbered cups, marble under one, after a swap and reveal.',   cat: 'Logic Reasoning' },
+      { title: 'A maze runner takes the shortest valid path to the exit.',          cat: 'Logic Reasoning' },
+      { title: 'A scale balances after replacing one side with equal mass.',        cat: 'Logic Reasoning' }
+    ],
+    ib: [
+      { title: 'A whiteboard equation is partly erased then rewritten correctly.',  cat: 'Information-Based' },
+      { title: 'A digital clock counts forward by exactly five seconds.',           cat: 'Information-Based' },
+      { title: 'A book page turns and reveals the same paragraph re-typeset.',      cat: 'Information-Based' }
+    ]
+  };
+
+  const grid = document.getElementById('video-grid');
+  function renderVideos(dim) {
+    const items = videoData[dim] || [];
+    grid.innerHTML = items.map((v, i) => `
+      <div class="video-item" style="animation: rowFadeIn 0.45s ${i * 90}ms ease both;">
+        <div class="video-poster">
+          <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+          <span class="placeholder-tag">Coming soon</span>
+        </div>
+        <div class="video-meta">
+          <div class="vm-cat">${v.cat}</div>
+          <div class="vm-title">${escapeHtml(v.title)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+  document.querySelectorAll('.dim-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.dim-tab').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderVideos(btn.getAttribute('data-dim'));
+    });
+  });
+  renderVideos('wk');
+
+  /* ------------------------------------------------------------
+   * 6. BibTeX copy
+   * ------------------------------------------------------------ */
+  const copyBtn = document.getElementById('copy-bibtex');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const text = document.getElementById('bibtex-content').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.classList.add('copied');
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+        }, 1600);
+      } catch (e) {
+        console.error('Copy failed', e);
+      }
+    });
+  }
+
+})();

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WorldReasonBench &mdash; Stress-Testing Video Generators as Future World-State Predictors</title>
+<meta name="description" content="WorldReasonBench: a human-aligned benchmark that evaluates whether video generators can reason about how an observed world should evolve over time." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" />
+
+<link rel="stylesheet" href="static/css/style.css" />
+</head>
+<body>
+
+<!-- ===================== TOP NAV ===================== -->
+<nav class="topnav" id="topnav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">WR</span>
+      <span class="brand-text">WorldReasonBench</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#leaderboard">Leaderboard</a></li>
+      <li><a href="#qualitative">Qualitative</a></li>
+      <li><a href="#bibtex">BibTeX</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-glow glow-a"></div>
+    <div class="hero-glow glow-b"></div>
+    <div class="hero-grid"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="badge-row">
+      <span class="badge"><i class="fa-solid fa-cube"></i> Benchmark &middot; Reasoning &middot; Video Generation</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="title-mono">WorldReasonBench</span>
+      <span class="title-sub">Human-Aligned Stress Testing of Video Generators<br/>as Future World-State Predictors</span>
+    </h1>
+
+    <p class="hero-tagline">
+      Can a video generator <em>reason</em> about how the world should evolve &mdash; not just <em>render</em> it?
+      <span class="tag-stat">436 cases</span>
+      <span class="tag-stat">4 reasoning dimensions</span>
+      <span class="tag-stat">11 generators</span>
+      <span class="tag-stat">~6K expert preference pairs</span>
+    </p>
+
+    <div class="cta-row">
+      <a class="cta cta-primary" href="#"><i class="fa-solid fa-file-pdf"></i> Paper</a>
+      <a class="cta" href="https://github.com/UniX-AI-Lab/WorldReasonBench" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> Code</a>
+      <a class="cta" href="#"><i class="fa-solid fa-database"></i> Dataset</a>
+      <a class="cta cta-ghost" href="#leaderboard"><i class="fa-solid fa-chart-column"></i> Leaderboard</a>
+    </div>
+
+    <div class="hero-figure">
+      <img src="static/images/bench_overview.png" alt="WorldReasonBench overview" loading="eager" />
+    </div>
+  </div>
+</header>
+
+<!-- ===================== ABSTRACT ===================== -->
+<section id="abstract" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">Abstract</span>
+    <h2>What this benchmark measures</h2>
+  </div>
+  <div class="prose">
+    <p>
+      Commercial video generation systems such as Seedance2.0 and Veo3.1 have rapidly improved,
+      strengthening the view that video generators may be evolving into &ldquo;world simulators.&rdquo;
+      Yet the community still lacks a benchmark that directly tests whether a model can reason about
+      how an observed world should evolve over time.
+    </p>
+    <p>
+      We introduce <strong>WorldReasonBench</strong>, which reframes video generation evaluation as
+      <em>world-state prediction</em>: given an initial state and an action, can a model generate a
+      future video whose state evolution remains physically, socially, logically, and informationally
+      consistent? It contains <strong>436 curated test cases</strong> with structured ground-truth QA
+      annotations spanning four reasoning dimensions and 22 subcategories.
+    </p>
+    <p>
+      We further release <strong>WorldRewardBench</strong>, a preference benchmark with approximately
+      <strong>6K expert-annotated pairs</strong> over 1.4K videos, supporting pair-wise and point-wise
+      reward-model evaluation.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== KEY NUMBERS ===================== -->
+<section class="section section-tight">
+  <div class="stats-grid reveal">
+    <div class="stat-card">
+      <div class="stat-num" data-target="436">0</div>
+      <div class="stat-label">Test Cases</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="22">0</div>
+      <div class="stat-label">Subcategories</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="11">0</div>
+      <div class="stat-label">Generators</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="6000" data-suffix="+">0</div>
+      <div class="stat-label">Preference Pairs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" data-target="15">0</div>
+      <div class="stat-label">Annotators</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num stat-rho">0.955</div>
+      <div class="stat-label">Score<sub>PR</sub> &mdash; Human <span class="rho">&rho;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== METHOD ===================== -->
+<section id="method" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">01 / Method</span>
+    <h2>Construction &amp; Evaluation Pipelines</h2>
+    <p class="section-lead">
+      A three-stage VLM-assisted construction pipeline produces structured ground-truth QA pairs,
+      and a two-part evaluation methodology turns generated videos into human-aligned scores.
+    </p>
+  </div>
+
+  <div class="pipeline-grid">
+    <figure class="figure-card pipeline-card">
+      <div class="card-tag">Construction</div>
+      <img src="static/images/data_pipe.png" alt="Data construction pipeline" />
+      <figcaption>
+        <strong>WorldReasonBench &amp; WorldRewardBench construction.</strong>
+        Taxonomy-aware captioning &rarr; reasoning-aware prompt generation &rarr; structured QA generation,
+        with expert scoring and preference-pair construction for the reward bench.
+      </figcaption>
+    </figure>
+
+    <figure class="figure-card pipeline-card">
+      <div class="card-tag">Evaluation</div>
+      <img src="static/images/eval_pipe.png" alt="Evaluation pipeline" />
+      <figcaption>
+        <strong>Two complementary components.</strong>
+        <em>Process-aware Reasoning Verification</em> turns structured QA into reasoning-phase diagnostics;
+        <em>Multi-dimensional Quality Assessment</em> scores each video on reasoning quality, temporal
+        consistency, and visual aesthetics.
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="formula-row reveal">
+    <div class="formula-card">
+      <div class="formula-eq">
+        Score<sub>PR</sub> = Acc<sub>QA</sub><sup>0.8</sup> &middot; s<sub>dyn</sub><sup>0.2</sup>
+      </div>
+      <div class="formula-cap">Process-aware reasoning score &mdash; outcome-completeness penalised on dynamic-phase failures.</div>
+    </div>
+    <div class="formula-card">
+      <div class="formula-eq">
+        S(v) = 0.4&middot;s<sub>r</sub> + 0.3&middot;s<sub>c</sub> + 0.3&middot;s<sub>a</sub>
+      </div>
+      <div class="formula-cap">Multi-dimensional quality score &mdash; reasoning, temporal consistency, visual aesthetics.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEADERBOARD ===================== -->
+<section id="leaderboard" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">02 / Leaderboard</span>
+    <h2>Main results across reasoning dimensions</h2>
+    <p class="section-lead">
+      All 11 generators evaluated on a shared evaluation set for fully controlled cross-model comparison.
+      Sort any column, filter by family, or switch the headline metric.
+    </p>
+  </div>
+
+  <div class="lb-controls">
+    <div class="lb-tabs" role="tablist" aria-label="Metric selector">
+      <button class="lb-tab active" data-metric="score_pr">Score<sub>PR</sub></button>
+      <button class="lb-tab" data-metric="sv">S(v)</button>
+    </div>
+    <div class="lb-filters" role="group" aria-label="Family filter">
+      <button class="lb-chip active" data-family="all">All <span class="chip-count">11</span></button>
+      <button class="lb-chip" data-family="closed">Closed-source <span class="chip-count">5</span></button>
+      <button class="lb-chip" data-family="open">Open-source <span class="chip-count">6</span></button>
+    </div>
+    <div class="lb-search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="lb-search-input" placeholder="Filter by model name..." autocomplete="off" />
+    </div>
+  </div>
+
+  <div class="lb-wrap">
+    <table class="lb-table" id="lb-table">
+      <thead>
+        <tr>
+          <th class="th-rank" data-sort="rank">#</th>
+          <th class="th-model" data-sort="model">Model</th>
+          <th class="th-family" data-sort="family">Family</th>
+          <th class="th-num is-active" data-sort="overall">Overall</th>
+          <th class="th-num" data-sort="wk">World Knowledge</th>
+          <th class="th-num" data-sort="hc">Human-Centric</th>
+          <th class="th-num" data-sort="lr">Logic Reasoning</th>
+          <th class="th-num" data-sort="ib">Information-Based</th>
+        </tr>
+      </thead>
+      <tbody id="lb-tbody"><!-- filled by JS --></tbody>
+    </table>
+  </div>
+
+  <p class="lb-note">
+    Higher is better. <span class="dot-best"></span> best across all 11 models &nbsp;
+    <span class="dot-second"></span> second-best. Source: Table 2 of the paper.
+  </p>
+</section>
+
+<!-- ===================== QUALITATIVE ===================== -->
+<section id="qualitative" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">03 / Qualitative</span>
+    <h2>Generated videos across the reasoning taxonomy</h2>
+    <p class="section-lead">
+      Visually plausible generations can still fail process-level world reasoning. Browse representative
+      cases from each dimension &mdash; videos coming soon.
+    </p>
+  </div>
+
+  <div class="dim-tabs" role="tablist">
+    <button class="dim-tab active" data-dim="wk">World Knowledge</button>
+    <button class="dim-tab" data-dim="hc">Human-Centric</button>
+    <button class="dim-tab" data-dim="lr">Logic Reasoning</button>
+    <button class="dim-tab" data-dim="ib">Information-Based</button>
+  </div>
+
+  <div class="video-grid" id="video-grid">
+    <!-- filled by JS -->
+  </div>
+
+  <figure class="figure-card reveal" style="margin-top:48px;">
+    <img src="static/images/qualitative_comparison.png" alt="Qualitative comparison" />
+    <figcaption>
+      <strong>Qualitative comparison on representative reasoning cases.</strong>
+      Higher-scoring models better preserve the intended state transition and temporal dynamics.
+    </figcaption>
+  </figure>
+</section>
+
+<!-- ===================== ANNOTATION ===================== -->
+<section class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">04 / Human study</span>
+    <h2>Expert annotation for WorldRewardBench</h2>
+    <p class="section-lead">
+      Fifteen trained annotators rate each video on reasoning quality, temporal consistency, and visual
+      aesthetics. Aggregated into per-video scores and pairwise preferences for reward-model calibration.
+    </p>
+  </div>
+  <figure class="figure-card">
+    <img src="static/images/annotation_platform.png" alt="Annotation platform" />
+    <figcaption>Annotation interface: input image, prompt, eight anonymised generations, and a 1&ndash;5 rubric over three dimensions.</figcaption>
+  </figure>
+</section>
+
+<!-- ===================== BIBTEX ===================== -->
+<section id="bibtex" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">Cite</span>
+    <h2>BibTeX</h2>
+  </div>
+  <div class="bibtex-card">
+    <button class="copy-btn" id="copy-bibtex" type="button" title="Copy">
+      <i class="fa-regular fa-copy"></i>
+    </button>
+    <pre><code id="bibtex-content">@misc{worldreasonbench2026,
+  title  = {WorldReasonBench: Human-Aligned Stress Testing of Video Generators
+            as Future World-State Predictors},
+  author = {Anonymous},
+  year   = {2026},
+  url    = {https://github.com/UniX-AI-Lab/WorldReasonBench}
+}</code></pre>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 WorldReasonBench. Released under CC-BY 4.0. Page template inspired by Nerfies.</p>
+    <p class="footer-links">
+      <a href="https://github.com/UniX-AI-Lab/WorldReasonBench" target="_blank" rel="noopener">GitHub</a>
+      &middot; <a href="#">Paper</a>
+      &middot; <a href="#">Dataset</a>
+    </p>
+  </div>
+</footer>
+
+<script src="static/js/main.js" defer></script>
+</body>
+</html>
