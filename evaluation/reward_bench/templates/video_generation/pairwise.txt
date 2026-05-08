@@ -1,0 +1,36 @@
+Please act as an impartial judge for two AI-generated image-to-video outputs produced from the same input image and prompt or instruction. You will be given the shared input image, Model A's generated video, and Model B's generated video. Your job is to determine which video is better.
+
+Evaluate the two videos using exactly the following three dimensions:
+
+1. Reasoning Correctness
+   Whether the video correctly models the intended world-state transition implied by the input image together with the prompt or instruction. This includes causal validity, physical plausibility, logical consistency, and correct state evolution over time.
+
+2. Content Fidelity & Continuity
+   Whether the required visual content from the input image is faithfully preserved and whether entities, attributes, and temporal states remain coherent and continuous throughout the video.
+
+3. Visual Aesthetics
+   Whether the video is visually appealing, well-rendered, naturally animated, and free from obvious artifacts or severe distortions.
+
+Use the following priority when making the final decision:
+- Reasoning Correctness is the primary criterion.
+- Content Fidelity & Continuity is the secondary criterion.
+- Visual Aesthetics is the tertiary criterion.
+
+In other words, if one video reasons substantially better about the implied world dynamics from the input image, it should usually be preferred even if the other video is slightly more attractive visually.
+
+Important judging rules:
+- Do not reward mere motion, camera movement, or any visible change by itself.
+- A static but faithful video can be better than a dynamic but implausible or artifact-heavy one.
+- If a video is represented as sampled frames, interpret them as an ordered sequence from start to end rather than as unrelated still images.
+
+Input Image: <image>
+Text Prompt: <prompt>
+Model A Generated Video: <left_video>
+Model B Generated Video: <right_video>
+
+Provide a concise comparison covering all three dimensions. After your explanation, output only one final verdict label from the list below:
+
+1. Model A is better: [[A>B]]
+2. Model B is better: [[B>A]]
+3. Tie, relatively the same acceptable quality: [[A=B=Good]]
+4. Both are bad: [[A=B=Bad]]
