@@ -660,6 +660,158 @@ td.is-second {
 .dot-second { background: var(--silver); }
 
 /* ============================================================
+   VALIDATION TABLE (Table 1 — human Elo vs metrics)
+   ============================================================ */
+.val-table { min-width: 1020px; }
+.val-table tbody td.col-num { text-align: right; }
+
+.delta-pill {
+  display: inline-block;
+  min-width: 24px;
+  padding: 2px 9px;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  border: 1px solid transparent;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.delta-pill.delta-zero {
+  color: #11825a;
+  background: rgba(20, 184, 134, 0.12);
+  border-color: rgba(20, 184, 134, 0.32);
+  box-shadow: 0 0 0 0 rgba(20, 184, 134, 0.0);
+}
+.delta-pill.delta-low {
+  color: #b76200;
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+.delta-pill.delta-high {
+  color: #c0341d;
+  background: rgba(220, 38, 38, 0.10);
+  border-color: rgba(220, 38, 38, 0.30);
+}
+.lb-table tbody tr:hover .delta-pill {
+  transform: translateY(-1px);
+}
+.lb-table tbody tr:hover .delta-pill.delta-zero {
+  box-shadow: 0 0 12px rgba(20, 184, 134, 0.45);
+}
+.lb-table tbody tr:hover .delta-pill.delta-low {
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.45);
+}
+.lb-table tbody tr:hover .delta-pill.delta-high {
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.45);
+}
+
+/* dashed divider between closed- and open-source generators */
+.rb-divider td {
+  padding: 0;
+  height: 0;
+  border-bottom: 1px dashed var(--border-strong);
+  background: transparent;
+}
+.rb-divider:hover td { background: transparent; }
+
+.val-note .delta-pill { margin: 0 4px 0 8px; }
+
+/* ============================================================
+   REWARD-MODELS TABLE (Table 2 — WorldRewardBench alignment)
+   ============================================================ */
+.rb-table { min-width: 1180px; }
+.rb-table thead th {
+  text-align: center;
+  white-space: nowrap;
+}
+.rb-table thead th.rb-th-rowsp {
+  vertical-align: middle;
+  text-align: left;
+}
+.rb-th-group {
+  font-size: 11.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border);
+}
+.rb-grp-closed { color: var(--closed); }
+.rb-grp-open { color: var(--open); }
+.rb-grp-closed::after, .rb-grp-open::after {
+  content: '';
+  display: block;
+  height: 2px;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+.rb-grp-closed::after { background: linear-gradient(90deg, var(--closed), rgba(99,102,241,0.0)); }
+.rb-grp-open::after   { background: linear-gradient(90deg, var(--open), rgba(20,184,166,0.0)); }
+
+.rb-table tbody td {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px;
+}
+.rb-table tbody td.col-model {
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+.rb-table tbody td.rb-proto {
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+/* meta row: "Frames used" */
+.rb-meta td {
+  background: var(--bg-soft);
+  font-size: 12px;
+  color: var(--text-mute);
+}
+.rb-meta:hover td { background: var(--bg-soft); }
+
+/* visual separator above each new dimension block */
+.rb-dim-head td {
+  border-top: 1px solid var(--border);
+}
+
+/* Overall row: subtle primary tint */
+.rb-overall td {
+  background: rgba(79, 70, 229, 0.045);
+}
+.rb-overall:hover td {
+  background: rgba(79, 70, 229, 0.085);
+}
+.rb-overall td.col-model {
+  color: var(--primary-deep);
+}
+
+/* inline highlights — used inside cells that contain two numbers */
+.hl-best {
+  color: var(--accent);
+  font-weight: 700;
+}
+.hl-second {
+  color: #6f7286;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--silver);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .val-table, .rb-table { font-size: 13px; }
+  .delta-pill { font-size: 11px; padding: 1px 7px; }
+}
+
+/* ============================================================
    QUALITATIVE / VIDEO GRID
    ============================================================ */
 .dim-tabs {

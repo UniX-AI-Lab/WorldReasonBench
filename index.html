@@ -14,7 +14,7 @@
 <!-- Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" />
 
-<link rel="stylesheet" href="static/css/style.css?v=prompt-toggle-1" />
+<link rel="stylesheet" href="static/css/style.css?v=tables-1" />
 </head>
 <body>
 
@@ -29,7 +29,9 @@
       <li><a href="#abstract">Abstract</a></li>
       <li><a href="#method">Method</a></li>
       <li><a href="#leaderboard">Leaderboard</a></li>
+      <li><a href="#validation">Validation</a></li>
       <li><a href="#qualitative">Qualitative</a></li>
+      <li><a href="#reward">Reward</a></li>
       <li><a href="#bibtex">BibTeX</a></li>
     </ul>
   </div>
@@ -268,10 +270,187 @@
   </p>
 </section>
 
+<!-- ===================== VALIDATION ===================== -->
+<section id="validation" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">03 / Validation</span>
+    <h2>Metrics align with human ranking</h2>
+    <p class="section-lead">
+      Pairwise expert evaluation gives each model a Human Elo. Our automated
+      <strong>Score<sub>PR</sub></strong> reproduces the human ranking with absolute
+      rank displacement |&Delta;r|&nbsp;&le;&nbsp;1 on 8 of 11 models, while a generic
+      Qwen3.5-Thinking judge drifts by up to four positions.
+    </p>
+  </div>
+
+  <div class="lb-wrap">
+    <table class="lb-table val-table">
+      <thead>
+        <tr>
+          <th class="th-rank">#</th>
+          <th class="th-model">Model</th>
+          <th class="th-num">Human<br/>Elo</th>
+          <th class="th-num">Judge<br/>Elo</th>
+          <th class="th-num">Judge<br/>Rank</th>
+          <th class="th-num">Acc<sub>QA</sub> (%)</th>
+          <th class="th-num">|&Delta;r|</th>
+          <th class="th-num">Score<sub>PR</sub> (%)</th>
+          <th class="th-num">|&Delta;r|</th>
+          <th class="th-num">s<sub>dyn</sub>/Acc<sub>QA</sub></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="lb-row-anim" style="animation-delay:0ms;">
+          <td class="col-rank">1</td>
+          <td class="col-model">Seedance2.0</td>
+          <td class="col-num is-best">1471</td>
+          <td class="col-num">1183</td>
+          <td class="col-num">3</td>
+          <td class="col-num is-best">41.2</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num is-best">39.8</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">0.84</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:40ms;">
+          <td class="col-rank">2</td>
+          <td class="col-model">Veo3.1-Fast</td>
+          <td class="col-num">1253</td>
+          <td class="col-num">1151</td>
+          <td class="col-num">4</td>
+          <td class="col-num">36.0</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">35.3</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">0.91</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:80ms;">
+          <td class="col-rank">3</td>
+          <td class="col-model">Kling</td>
+          <td class="col-num">1240</td>
+          <td class="col-num">1142</td>
+          <td class="col-num">5</td>
+          <td class="col-num">34.0</td>
+          <td class="col-num"><span class="delta-pill delta-low">2</span></td>
+          <td class="col-num">32.7</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">0.82</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:120ms;">
+          <td class="col-rank">4</td>
+          <td class="col-model">Wan2.6</td>
+          <td class="col-num">1211</td>
+          <td class="col-num">1130</td>
+          <td class="col-num">6</td>
+          <td class="col-num">34.7</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">32.4</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">0.71</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:160ms;">
+          <td class="col-rank">5</td>
+          <td class="col-model">Sora2-8s</td>
+          <td class="col-num">1118</td>
+          <td class="col-num is-best">1222</td>
+          <td class="col-num">1</td>
+          <td class="col-num">35.3</td>
+          <td class="col-num"><span class="delta-pill delta-low">2</span></td>
+          <td class="col-num">34.3</td>
+          <td class="col-num"><span class="delta-pill delta-low">2</span></td>
+          <td class="col-num">0.86</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:200ms;">
+          <td class="col-rank">6</td>
+          <td class="col-model">Sora2-12s</td>
+          <td class="col-num">1109</td>
+          <td class="col-num">1217</td>
+          <td class="col-num">2</td>
+          <td class="col-num">33.5</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">32.4</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">0.84</td>
+        </tr>
+
+        <tr class="rb-divider"><td colspan="10" aria-hidden="true"></td></tr>
+
+        <tr class="lb-row-anim" style="animation-delay:240ms;">
+          <td class="col-rank">7</td>
+          <td class="col-model">Wan2.2-14B</td>
+          <td class="col-num">953</td>
+          <td class="col-num">913</td>
+          <td class="col-num">7</td>
+          <td class="col-num">19.6</td>
+          <td class="col-num"><span class="delta-pill delta-low">2</span></td>
+          <td class="col-num">17.5</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">0.57</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:280ms;">
+          <td class="col-rank">8</td>
+          <td class="col-model">HunyuanVideo-1.5</td>
+          <td class="col-num">911</td>
+          <td class="col-num">841</td>
+          <td class="col-num">9</td>
+          <td class="col-num">20.2</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">17.9</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">0.56</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:320ms;">
+          <td class="col-rank">9</td>
+          <td class="col-model">LongCat-Video</td>
+          <td class="col-num">904</td>
+          <td class="col-num">876</td>
+          <td class="col-num">8</td>
+          <td class="col-num">19.7</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">17.4</td>
+          <td class="col-num"><span class="delta-pill delta-zero">0</span></td>
+          <td class="col-num">0.54</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:360ms;">
+          <td class="col-rank">10</td>
+          <td class="col-model">UniVideo</td>
+          <td class="col-num">665</td>
+          <td class="col-num">737</td>
+          <td class="col-num">11</td>
+          <td class="col-num">16.2</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">14.4</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">0.56</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:400ms;">
+          <td class="col-rank">11</td>
+          <td class="col-model">LTX2.3</td>
+          <td class="col-num">587</td>
+          <td class="col-num">802</td>
+          <td class="col-num">10</td>
+          <td class="col-num">18.5</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">16.8</td>
+          <td class="col-num"><span class="delta-pill delta-low">1</span></td>
+          <td class="col-num">0.63</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="lb-note val-note">
+    <span class="delta-pill delta-zero">0</span>&nbsp;exact match&nbsp;
+    <span class="delta-pill delta-low">1&ndash;2</span>&nbsp;small drift&nbsp;
+    <span class="delta-pill delta-high">3+</span>&nbsp;large drift &nbsp;&middot;&nbsp;
+    <span class="dot-best"></span>&nbsp;column best. Dashed line separates closed- and open-source generators.
+  </p>
+</section>
+
 <!-- ===================== QUALITATIVE ===================== -->
 <section id="qualitative" class="section reveal">
   <div class="section-head">
-    <span class="section-kicker">03 / Qualitative</span>
+    <span class="section-kicker">04 / Qualitative</span>
     <h2>Generated videos across the reasoning taxonomy</h2>
     <p class="section-lead">
       Visually plausible generations can still fail process-level world reasoning. Browse representative
@@ -302,7 +481,7 @@
 <!-- ===================== ANNOTATION ===================== -->
 <section class="section reveal">
   <div class="section-head">
-    <span class="section-kicker">04 / Human study</span>
+    <span class="section-kicker">05 / Human study</span>
     <h2>Expert annotation for WorldRewardBench</h2>
     <p class="section-lead">
       Fifteen trained annotators rate each video on reasoning quality, temporal consistency, and visual
@@ -313,6 +492,157 @@
     <img src="static/images/annotation_platform.png" alt="Annotation platform" />
     <figcaption>Annotation interface: input image, prompt, eight anonymised generations, and a 1&ndash;5 rubric over three dimensions.</figcaption>
   </figure>
+</section>
+
+<!-- ===================== REWARD MODELS ===================== -->
+<section id="reward" class="section reveal">
+  <div class="section-head">
+    <span class="section-kicker">06 / Reward Models</span>
+    <h2>Reward-model alignment on WorldRewardBench</h2>
+    <p class="section-lead">
+      <strong>Pair-wise:</strong> agreement (%) <em>w/ Ties</em> / <em>w/o Ties</em>.
+      <strong>Point-wise:</strong> induced pairwise accuracy / Spearman <span class="rho">&rho;</span>.
+      Open Qwen3.5-Thinking matches GPT-5.4 on three of four reasoning dimensions.
+    </p>
+  </div>
+
+  <div class="lb-wrap">
+    <table class="lb-table rb-table">
+      <thead>
+        <tr>
+          <th rowspan="2" class="th-model rb-th-rowsp">Dimension</th>
+          <th rowspan="2" class="rb-th-rowsp">Protocol</th>
+          <th colspan="2" class="rb-th-group rb-grp-closed">Closed-source</th>
+          <th colspan="4" class="rb-th-group rb-grp-open">Open-source</th>
+        </tr>
+        <tr>
+          <th class="th-num">GPT-5.4</th>
+          <th class="th-num">Gemini-3.1-Flash</th>
+          <th class="th-num">Qwen3.5-9B<br/>Thinking</th>
+          <th class="th-num">Qwen3.5-27B<br/>Instruct</th>
+          <th class="th-num">Qwen3.5-27B<br/>Thinking</th>
+          <th class="th-num">Qwen3.5-27B<br/>Thinking &middot; 4&nbsp;FPS</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="rb-meta lb-row-anim" style="animation-delay:0ms;">
+          <td colspan="2" class="col-model">Frames used</td>
+          <td class="col-num">8</td>
+          <td class="col-num">1&nbsp;FPS</td>
+          <td class="col-num">~10</td>
+          <td class="col-num">~10</td>
+          <td class="col-num">~10</td>
+          <td class="col-num">4&nbsp;FPS</td>
+        </tr>
+
+        <tr class="rb-dim-head lb-row-anim" style="animation-delay:60ms;">
+          <td rowspan="2" class="col-model">World Knowledge</td>
+          <td class="rb-proto">Pair w/&nbsp;/&nbsp;w/o</td>
+          <td class="col-num">60.77 / 67.84</td>
+          <td class="col-num">51.50 / 60.44</td>
+          <td class="col-num">70.81 / 76.19</td>
+          <td class="col-num">69.37 / 74.16</td>
+          <td class="col-num">69.94 / 74.64</td>
+          <td class="col-num">69.51 / 74.23</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:100ms;">
+          <td class="rb-proto">Point Acc&nbsp;/&nbsp;&rho;</td>
+          <td class="col-num">54.55 / 0.592</td>
+          <td class="col-num">59.86 / 0.582</td>
+          <td class="col-num">60.70 / 0.720</td>
+          <td class="col-num">54.01 / 0.658</td>
+          <td class="col-num">60.57 / 0.687</td>
+          <td class="col-num">62.09 / 0.711</td>
+        </tr>
+
+        <tr class="rb-dim-head lb-row-anim" style="animation-delay:140ms;">
+          <td rowspan="2" class="col-model">Human-Centric</td>
+          <td class="rb-proto">Pair w/&nbsp;/&nbsp;w/o</td>
+          <td class="col-num">68.37 / 76.80</td>
+          <td class="col-num">58.22 / 66.27</td>
+          <td class="col-num">71.71 / 77.52</td>
+          <td class="col-num">71.25 / 76.05</td>
+          <td class="col-num">72.61 / 77.81</td>
+          <td class="col-num">69.08 / 74.41</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:180ms;">
+          <td class="rb-proto">Point Acc&nbsp;/&nbsp;&rho;</td>
+          <td class="col-num">59.14 / 0.626</td>
+          <td class="col-num">60.06 / 0.675</td>
+          <td class="col-num">59.54 / 0.702</td>
+          <td class="col-num">55.94 / 0.682</td>
+          <td class="col-num">62.81 / 0.713</td>
+          <td class="col-num">60.49 / 0.703</td>
+        </tr>
+
+        <tr class="rb-dim-head lb-row-anim" style="animation-delay:220ms;">
+          <td rowspan="2" class="col-model">Logic Reasoning</td>
+          <td class="rb-proto">Pair w/&nbsp;/&nbsp;w/o</td>
+          <td class="col-num">67.41 / 78.43</td>
+          <td class="col-num">58.23 / 67.68</td>
+          <td class="col-num">69.33 / 77.13</td>
+          <td class="col-num">68.46 / 74.51</td>
+          <td class="col-num">70.16 / 76.23</td>
+          <td class="col-num">68.53 / 74.97</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:260ms;">
+          <td class="rb-proto">Point Acc&nbsp;/&nbsp;&rho;</td>
+          <td class="col-num">53.42 / 0.523</td>
+          <td class="col-num">57.65 / 0.562</td>
+          <td class="col-num">57.50 / 0.617</td>
+          <td class="col-num">55.71 / 0.573</td>
+          <td class="col-num">60.17 / 0.606</td>
+          <td class="col-num">58.40 / 0.597</td>
+        </tr>
+
+        <tr class="rb-dim-head lb-row-anim" style="animation-delay:300ms;">
+          <td rowspan="2" class="col-model">Information-Based</td>
+          <td class="rb-proto">Pair w/&nbsp;/&nbsp;w/o</td>
+          <td class="col-num">56.95 / 63.68</td>
+          <td class="col-num">50.21 / 58.10</td>
+          <td class="col-num">52.45 / 61.76</td>
+          <td class="col-num">60.44 / 65.22</td>
+          <td class="col-num">60.24 / 65.32</td>
+          <td class="col-num">61.50 / 66.39</td>
+        </tr>
+        <tr class="lb-row-anim" style="animation-delay:340ms;">
+          <td class="rb-proto">Point Acc&nbsp;/&nbsp;&rho;</td>
+          <td class="col-num">48.15 / <span class="hl-second">0.484</span></td>
+          <td class="col-num">47.89 / 0.432</td>
+          <td class="col-num">53.59 / 0.471</td>
+          <td class="col-num">47.95 / 0.408</td>
+          <td class="col-num">50.15 / 0.445</td>
+          <td class="col-num">52.41 / <span class="hl-best">0.526</span></td>
+        </tr>
+
+        <tr class="rb-dim-head rb-overall lb-row-anim" style="animation-delay:380ms;">
+          <td rowspan="2" class="col-model"><strong>Overall</strong></td>
+          <td class="rb-proto">Pair w/&nbsp;/&nbsp;w/o</td>
+          <td class="col-num">63.04 / 71.36</td>
+          <td class="col-num">54.39 / 62.99</td>
+          <td class="col-num"><span class="hl-second">67.14</span> / <span class="hl-best">74.35</span></td>
+          <td class="col-num">66.89 / 72.07</td>
+          <td class="col-num"><span class="hl-best">67.74</span> / <span class="hl-second">73.05</span></td>
+          <td class="col-num">66.90 / 72.30</td>
+        </tr>
+        <tr class="rb-overall lb-row-anim" style="animation-delay:420ms;">
+          <td class="rb-proto">Point Acc&nbsp;/&nbsp;&rho;</td>
+          <td class="col-num">53.43 / 0.565</td>
+          <td class="col-num">55.84 / 0.568</td>
+          <td class="col-num">57.76 / <span class="hl-best">0.655</span></td>
+          <td class="col-num">53.15 / 0.591</td>
+          <td class="col-num"><span class="hl-best">57.85</span> / 0.626</td>
+          <td class="col-num"><span class="hl-second">57.83</span> / <span class="hl-second">0.644</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="lb-note">
+    <span class="hl-best">Bold</span> best across all six reward models &nbsp;&middot;&nbsp;
+    <span class="hl-second">Underlined</span> second-best. Source: Table 4 of the paper.
+  </p>
 </section>
 
 <!-- ===================== BIBTEX ===================== -->
