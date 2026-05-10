@@ -846,6 +846,36 @@ td.is-second {
 @media (max-width: 620px) {
   .video-grid { grid-template-columns: 1fr; }
 }
+.video-grid-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+.video-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--primary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.18s, color 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+.video-expand-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary-deep);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.video-expand-btn[hidden] {
+  display: none;
+}
 .video-item {
   position: relative;
   border-radius: var(--radius);

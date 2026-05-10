@@ -292,9 +292,12 @@
 
   let activeVideoDim = 'wk';
   const loadedVideoInfo = new Set();
+  const expandedVideoDims = new Set();
 
   const grid = document.getElementById('video-grid');
-  const videosPerDimension = 15;
+  const videoExpandBtn = document.getElementById('video-expand-btn');
+  const videosPerDimension = 18;
+  const collapsedVideoCount = 9;
   const promptToggleLabel = (expanded) => expanded ? 'Collapse prompt' : 'Show full prompt';
 
   function syncPromptToggles() {
@@ -317,7 +320,7 @@
     activeVideoDim = dim;
     const sourceItems = videoData[dim] || [];
     const categoryLabel = sourceItems[0] ? sourceItems[0].cat : 'Video';
-    const items = Array.from({ length: videosPerDimension }, (_, index) => (
+    const allItems = Array.from({ length: videosPerDimension }, (_, index) => (
       sourceItems[index] || {
         title: 'Coming soon',
         cat: categoryLabel,
@@ -325,6 +328,17 @@
         model: '----'
       }
     ));
+    const isExpanded = expandedVideoDims.has(dim);
+    const items = isExpanded ? allItems : allItems.slice(0, collapsedVideoCount);
+
+    if (videoExpandBtn) {
+      videoExpandBtn.hidden = allItems.length <= collapsedVideoCount;
+      videoExpandBtn.setAttribute('aria-expanded', String(isExpanded));
+      videoExpandBtn.innerHTML = isExpanded
+        ? '<i class="fa-solid fa-chevron-up"></i> Show fewer videos'
+        : '<i class="fa-solid fa-chevron-down"></i> Show all videos';
+    }
+
     grid.innerHTML = items.map((v, i) => `
       <div class="video-item" style="animation: rowFadeIn 0.45s ${i * 90}ms ease both;">
         <div class="video-poster ${v.src && v.title !== '---' ? 'has-video' : ''}">
@@ -405,11 +419,22 @@
       : '<i class="fa-solid fa-ellipsis"></i>';
   });
   window.addEventListener('resize', syncPromptToggles);
+  if (videoExpandBtn) {
+    videoExpandBtn.addEventListener('click', () => {
+      if (expandedVideoDims.has(activeVideoDim)) {
+        expandedVideoDims.delete(activeVideoDim);
+      } else {
+        expandedVideoDims.add(activeVideoDim);
+      }
+      renderVideos(activeVideoDim);
+    });
+  }
   document.querySelectorAll('.dim-tab').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.dim-tab').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
       const dim = btn.getAttribute('data-dim');
+      expandedVideoDims.delete(dim);
       renderVideos(dim);
       loadVideoInfo(dim);
     });
