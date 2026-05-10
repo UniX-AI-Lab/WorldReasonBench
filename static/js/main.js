@@ -336,7 +336,7 @@
       videoExpandBtn.setAttribute('aria-expanded', String(isExpanded));
       videoExpandBtn.innerHTML = isExpanded
         ? '<i class="fa-solid fa-chevron-up"></i> Show fewer videos'
-        : '<i class="fa-solid fa-chevron-down"></i> Show all videos';
+        : '<i class="fa-solid fa-chevron-down"></i> Show more videos';
     }
 
     grid.innerHTML = items.map((v, i) => `
