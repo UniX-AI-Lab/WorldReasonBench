@@ -1,0 +1,80 @@
+{
+  "category": "HumanCentric",
+  "videos": [
+    {
+      "video_name": "hc_1.mp4",
+      "prompt": "What happens when this man moves his hands?",
+      "model": "Kling V3"
+    },
+    {
+      "video_name": "hc_2.mp4",
+      "prompt": "The character in the picture wants to wash his car. The car wash shop is 50m away. Give the process of the character in the picture going to the car wash shop.",
+      "model": "Seedance 2.0"
+    },
+    {
+      "video_name": "hc_3.mp4",
+      "prompt": "This box is too high. How should the characters in the picture use tools to get to the box?",
+      "model": "Kling V3"
+    },
+    {
+      "video_name": "hc_4.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_5.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_6.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_7.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_8.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_9.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_10.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_11.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_12.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_13.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_14.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "hc_15.mp4",
+      "prompt": "---",
+      "model": "---"
+    }
+  ]
+}

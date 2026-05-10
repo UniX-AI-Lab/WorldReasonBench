@@ -1,0 +1,80 @@
+{
+  "category": "LogicReasoning",
+  "videos": [
+    {
+      "video_name": "lr_1.mp4",
+      "prompt": "Start with a 2D atomic, electron point, or structural diagram of methane and generate a smooth scientific animation that transforms them into a clear 3D geometric model of methane.",
+      "model": "Kling V3"
+    },
+    {
+      "video_name": "lr_2.mp4",
+      "prompt": "Use the input image as the first frame to solve the problem and give the solution process.",
+      "model": "Seedance 2.0"
+    },
+    {
+      "video_name": "lr_3.mp4",
+      "prompt": "The picture shows the flame reaction of various metals, showing the subsequent process of this experiment.",
+      "model": "Wan 2.6"
+    },
+    {
+      "video_name": "lr_4.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_5.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_6.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_7.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_8.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_9.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_10.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_11.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_12.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_13.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_14.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "lr_15.mp4",
+      "prompt": "---",
+      "model": "---"
+    }
+  ]
+}

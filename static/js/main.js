@@ -291,8 +291,10 @@
   };
 
   let activeVideoDim = 'wk';
+  const loadedVideoInfo = new Set();
 
   const grid = document.getElementById('video-grid');
+  const videosPerDimension = 15;
   const promptToggleLabel = (expanded) => expanded ? 'Collapse prompt' : 'Show full prompt';
 
   function syncPromptToggles() {
@@ -313,11 +315,20 @@
 
   function renderVideos(dim) {
     activeVideoDim = dim;
-    const items = videoData[dim] || [];
+    const sourceItems = videoData[dim] || [];
+    const categoryLabel = sourceItems[0] ? sourceItems[0].cat : 'Video';
+    const items = Array.from({ length: videosPerDimension }, (_, index) => (
+      sourceItems[index] || {
+        title: 'Coming soon',
+        cat: categoryLabel,
+        src: '',
+        model: '----'
+      }
+    ));
     grid.innerHTML = items.map((v, i) => `
       <div class="video-item" style="animation: rowFadeIn 0.45s ${i * 90}ms ease both;">
-        <div class="video-poster ${v.src ? 'has-video' : ''}">
-          ${v.src ? `
+        <div class="video-poster ${v.src && v.title !== '---' ? 'has-video' : ''}">
+          ${v.src && v.title !== '---' ? `
             <video controls autoplay muted loop playsinline preload="metadata">
               <source src="${v.src}" type="video/mp4">
             </video>
@@ -340,6 +351,43 @@
     `).join('');
     requestAnimationFrame(syncPromptToggles);
   }
+
+  function applyVideoInfo(dim, categoryData) {
+    const items = videoData[dim] || [];
+    const category = dimToCategory[dim];
+    if (!category || !categoryData || !Array.isArray(categoryData.videos)) return;
+
+    categoryData.videos.forEach((video, index) => {
+      const isPlaceholder = video.video_name === '---';
+      const videoName = isPlaceholder ? `${dim}_${index + 1}.mp4` : video.video_name;
+      items[index] = {
+        title: video.prompt || '---',
+        cat: items[index] ? items[index].cat : categoryData.category,
+        src: `data/video/${category}/${videoName}`,
+        model: video.model || '---'
+      };
+    });
+  }
+
+  function loadVideoInfo(dim) {
+    const category = dimToCategory[dim];
+    if (!category || loadedVideoInfo.has(dim)) return;
+
+    fetch(`data/${category}.json`, { cache: 'no-cache' })
+      .then((r) => {
+        if (!r.ok) throw new Error(`Could not load data/${category}.json`);
+        return r.json();
+      })
+      .then((data) => {
+        applyVideoInfo(dim, data);
+        loadedVideoInfo.add(dim);
+        if (activeVideoDim === dim) renderVideos(dim);
+      })
+      .catch((err) => {
+        console.error('Video prompt load failed', err);
+      });
+  }
+
   grid.addEventListener('click', (e) => {
     const toggle = e.target.closest('.vm-prompt-toggle');
     if (!toggle) return;
@@ -361,41 +409,13 @@
     btn.addEventListener('click', () => {
       document.querySelectorAll('.dim-tab').forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      renderVideos(btn.getAttribute('data-dim'));
+      const dim = btn.getAttribute('data-dim');
+      renderVideos(dim);
+      loadVideoInfo(dim);
     });
   });
   renderVideos(activeVideoDim);
-
-  fetch('data/video_information.json', { cache: 'no-cache' })
-    .then((r) => r.json())
-    .then((data) => {
-      const videoInfoLookup = new Map();
-      (data.categories || []).forEach((category) => {
-        (category.videos || []).forEach((video) => {
-          videoInfoLookup.set(`${category.category}/${video.video_name}`, {
-            prompt: video.prompt || '----',
-            model: video.model || '----'
-          });
-        });
-      });
-
-      Object.entries(videoData).forEach(([dim, items]) => {
-        const category = dimToCategory[dim];
-        items.forEach((item) => {
-          const videoName = item.src.split('/').pop();
-          const videoInfo = videoInfoLookup.get(`${category}/${videoName}`);
-          if (videoInfo) {
-            item.title = videoInfo.prompt;
-            item.model = videoInfo.model;
-          }
-        });
-      });
-
-      renderVideos(activeVideoDim);
-    })
-    .catch((err) => {
-      console.error('Video prompt load failed', err);
-    });
+  loadVideoInfo(activeVideoDim);
 
   /* ------------------------------------------------------------
    * 6. BibTeX copy

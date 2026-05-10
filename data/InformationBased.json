@@ -1,0 +1,80 @@
+{
+  "category": "InformationBased",
+  "videos": [
+    {
+      "video_name": "ib_1.mp4",
+      "prompt": "Use the book cover of “The Little Prince” as the first frame.Generate a video that visually expresses the following passage.The video should be divided into consecutive visual segments.Each segment corresponds to one sentence of the passage.For each segment:The visuals should be generated based solely on the meaning of the sentence.The exact sentence should appear as a subtitle at the bottom of the screen.No additional narration or explanation should be added.\nPassage:“To me, you are nothing more than a little boy, just like a hundred thousand other little boys.I have no need of you, and you have no need of me.To you, I am nothing more than a fox, like a hundred thousand other foxes.But if you tame me, then we shall need each other.To me, you will be unique in all the world. To you, I shall be unique in all the world.",
+      "model": "Veo 3.1"
+    },
+    {
+      "video_name": "ib_2.mp4",
+      "prompt": "Give the change process in the 10 months after the fertilization of sperm and egg.",
+      "model": "Sora 2.0"
+    },
+    {
+      "video_name": "ib_3.mp4",
+      "prompt": "The red dust kicked up by the tires condenses into the Tesla brand T logo in the air",
+      "model": "Seedance 2.0"
+    },
+    {
+      "video_name": "ib_4.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_5.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_6.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_7.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_8.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_9.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_10.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_11.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_12.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_13.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_14.mp4",
+      "prompt": "---",
+      "model": "---"
+    },
+    {
+      "video_name": "ib_15.mp4",
+      "prompt": "---",
+      "model": "---"
+    }
+  ]
+}
