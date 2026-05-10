@@ -262,43 +262,101 @@
    * ------------------------------------------------------------ */
   const videoData = {
     wk: [
-      { title: 'A balloon released indoors rises and rests against the ceiling.',  cat: 'World Knowledge' },
-      { title: 'Ice cubes drop into hot water and gradually melt away.',            cat: 'World Knowledge' },
-      { title: 'A spinning top slowly loses momentum and falls over.',              cat: 'World Knowledge' }
+      { title: 'A balloon released indoors rises and rests against the ceiling.',  cat: 'World Knowledge', src: 'data/video/WorldKnowledge/wk_1.mp4', model: '----' },
+      { title: 'Ice cubes drop into hot water and gradually melt away.',            cat: 'World Knowledge', src: 'data/video/WorldKnowledge/wk_2.mp4', model: '----' },
+      { title: 'A spinning top slowly loses momentum and falls over.',              cat: 'World Knowledge', src: 'data/video/WorldKnowledge/wk_3.mp4', model: '----' }
     ],
     hc: [
-      { title: 'Two people shake hands and then exchange a written document.',     cat: 'Human-Centric' },
-      { title: 'A pianist plays a chord; the keys depress in synchronised order.', cat: 'Human-Centric' },
-      { title: 'A child reaches for a cup; the parent catches it before it tips.', cat: 'Human-Centric' }
+      { title: 'Two people shake hands and then exchange a written document.',     cat: 'Human-Centric', src: 'data/video/HumanCentric/hc_1.mp4', model: '----' },
+      { title: 'A pianist plays a chord; the keys depress in synchronised order.', cat: 'Human-Centric', src: 'data/video/HumanCentric/hc_2.mp4', model: '----' },
+      { title: 'A child reaches for a cup; the parent catches it before it tips.', cat: 'Human-Centric', src: 'data/video/HumanCentric/hc_3.mp4', model: '----' }
     ],
     lr: [
-      { title: 'Three numbered cups, marble under one, after a swap and reveal.',   cat: 'Logic Reasoning' },
-      { title: 'A maze runner takes the shortest valid path to the exit.',          cat: 'Logic Reasoning' },
-      { title: 'A scale balances after replacing one side with equal mass.',        cat: 'Logic Reasoning' }
+      { title: 'Three numbered cups, marble under one, after a swap and reveal.',   cat: 'Logic Reasoning', src: 'data/video/LogicReasoning/lr_1.mp4', model: '----' },
+      { title: 'A maze runner takes the shortest valid path to the exit.',          cat: 'Logic Reasoning', src: 'data/video/LogicReasoning/lr_2.mp4', model: '----' },
+      { title: 'A scale balances after replacing one side with equal mass.',        cat: 'Logic Reasoning', src: 'data/video/LogicReasoning/lr_3.mp4', model: '----' }
     ],
     ib: [
-      { title: 'A whiteboard equation is partly erased then rewritten correctly.',  cat: 'Information-Based' },
-      { title: 'A digital clock counts forward by exactly five seconds.',           cat: 'Information-Based' },
-      { title: 'A book page turns and reveals the same paragraph re-typeset.',      cat: 'Information-Based' }
+      { title: 'A whiteboard equation is partly erased then rewritten correctly.',  cat: 'Information-Based', src: 'data/video/InformationBased/ib_1.mp4', model: '----' },
+      { title: 'A digital clock counts forward by exactly five seconds.',           cat: 'Information-Based', src: 'data/video/InformationBased/ib_2.mp4', model: '----' },
+      { title: 'A book page turns and reveals the same paragraph re-typeset.',      cat: 'Information-Based', src: 'data/video/InformationBased/ib_3.mp4', model: '----' }
     ]
   };
 
+  const dimToCategory = {
+    wk: 'WorldKnowledge',
+    hc: 'HumanCentric',
+    lr: 'LogicReasoning',
+    ib: 'InformationBased'
+  };
+
+  let activeVideoDim = 'wk';
+
   const grid = document.getElementById('video-grid');
+  const promptToggleLabel = (expanded) => expanded ? 'Collapse prompt' : 'Show full prompt';
+
+  function syncPromptToggles() {
+    grid.querySelectorAll('.vm-prompt-wrap').forEach((wrap) => {
+      const prompt = wrap.querySelector('.vm-title');
+      const toggle = wrap.querySelector('.vm-prompt-toggle');
+      if (!prompt || !toggle) return;
+
+      const isExpanded = prompt.classList.contains('expanded');
+      if (isExpanded) {
+        toggle.hidden = false;
+        return;
+      }
+
+      toggle.hidden = prompt.scrollHeight <= prompt.clientHeight + 1;
+    });
+  }
+
   function renderVideos(dim) {
+    activeVideoDim = dim;
     const items = videoData[dim] || [];
     grid.innerHTML = items.map((v, i) => `
       <div class="video-item" style="animation: rowFadeIn 0.45s ${i * 90}ms ease both;">
-        <div class="video-poster">
-          <div class="play-icon"><i class="fa-solid fa-play"></i></div>
-          <span class="placeholder-tag">Coming soon</span>
+        <div class="video-poster ${v.src ? 'has-video' : ''}">
+          ${v.src ? `
+            <video controls autoplay muted loop playsinline preload="metadata">
+              <source src="${v.src}" type="video/mp4">
+            </video>
+            <div class="video-model-badge">${escapeHtml(v.model || '----')}</div>
+          ` : `
+            <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+            <span class="placeholder-tag">Coming soon</span>
+          `}
         </div>
         <div class="video-meta">
           <div class="vm-cat">${v.cat}</div>
-          <div class="vm-title">${escapeHtml(v.title)}</div>
+          <div class="vm-prompt-wrap">
+            <div class="vm-title">${escapeHtml(v.title)}</div>
+            <button class="vm-prompt-toggle" type="button" aria-expanded="false" aria-label="${promptToggleLabel(false)}" title="${promptToggleLabel(false)}" hidden>
+              <i class="fa-solid fa-ellipsis"></i>
+            </button>
+          </div>
         </div>
       </div>
     `).join('');
+    requestAnimationFrame(syncPromptToggles);
   }
+  grid.addEventListener('click', (e) => {
+    const toggle = e.target.closest('.vm-prompt-toggle');
+    if (!toggle) return;
+
+    const wrap = toggle.closest('.vm-prompt-wrap');
+    const prompt = wrap && wrap.querySelector('.vm-title');
+    if (!prompt) return;
+
+    const expanded = prompt.classList.toggle('expanded');
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.setAttribute('aria-label', promptToggleLabel(expanded));
+    toggle.setAttribute('title', promptToggleLabel(expanded));
+    toggle.innerHTML = expanded
+      ? '<i class="fa-solid fa-chevron-up"></i>'
+      : '<i class="fa-solid fa-ellipsis"></i>';
+  });
+  window.addEventListener('resize', syncPromptToggles);
   document.querySelectorAll('.dim-tab').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.dim-tab').forEach((b) => b.classList.remove('active'));
@@ -306,7 +364,38 @@
       renderVideos(btn.getAttribute('data-dim'));
     });
   });
-  renderVideos('wk');
+  renderVideos(activeVideoDim);
+
+  fetch('data/video_information.json', { cache: 'no-cache' })
+    .then((r) => r.json())
+    .then((data) => {
+      const videoInfoLookup = new Map();
+      (data.categories || []).forEach((category) => {
+        (category.videos || []).forEach((video) => {
+          videoInfoLookup.set(`${category.category}/${video.video_name}`, {
+            prompt: video.prompt || '----',
+            model: video.model || '----'
+          });
+        });
+      });
+
+      Object.entries(videoData).forEach(([dim, items]) => {
+        const category = dimToCategory[dim];
+        items.forEach((item) => {
+          const videoName = item.src.split('/').pop();
+          const videoInfo = videoInfoLookup.get(`${category}/${videoName}`);
+          if (videoInfo) {
+            item.title = videoInfo.prompt;
+            item.model = videoInfo.model;
+          }
+        });
+      });
+
+      renderVideos(activeVideoDim);
+    })
+    .catch((err) => {
+      console.error('Video prompt load failed', err);
+    });
 
   /* ------------------------------------------------------------
    * 6. BibTeX copy

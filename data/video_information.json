@@ -1,0 +1,84 @@
+{
+  "categories": [
+    {
+      "category": "HumanCentric",
+      "videos": [
+        {
+          "video_name": "Kling V3",
+          "prompt": "What happens when this man moves his hands?",
+          "model": "Kling V3"
+        },
+        {
+          "video_name": "hc_2.mp4",
+          "prompt": "The character in the picture wants to wash his car. The car wash shop is 50m away. Give the process of the character in the picture going to the car wash shop.",
+          "model": "Seedance 2.0"
+        },
+        {
+          "video_name": "hc_3.mp4",
+          "prompt": "This box is too high. How should the characters in the picture use tools to get to the box?",
+          "model": "Kling V3"
+        }
+      ]
+    },
+    {
+      "category": "InformationBased",
+      "videos": [
+        {
+          "video_name": "ib_1.mp4",
+          "prompt": "Use the book cover of “The Little Prince” as the first frame.Generate a video that visually expresses the following passage.The video should be divided into consecutive visual segments.Each segment corresponds to one sentence of the passage.For each segment:The visuals should be generated based solely on the meaning of the sentence.The exact sentence should appear as a subtitle at the bottom of the screen.No additional narration or explanation should be added.\nPassage:“To me, you are nothing more than a little boy, just like a hundred thousand other little boys.I have no need of you, and you have no need of me.To you, I am nothing more than a fox, like a hundred thousand other foxes.But if you tame me, then we shall need each other.To me, you will be unique in all the world. To you, I shall be unique in all the world.",
+          "model": "Veo 3.1"
+        },
+        {
+          "video_name": "ib_2.mp4",
+          "prompt": "Give the change process in the 10 months after the fertilization of sperm and egg.",
+          "model": "Sora 2.0"
+        },
+        {
+          "video_name": "ib_3.mp4",
+          "prompt": "The red dust kicked up by the tires condenses into the Tesla brand T logo in the air",
+          "model": "Seedance 2.0"
+        }
+      ]
+    },
+    {
+      "category": "LogicReasoning",
+      "videos": [
+        {
+          "video_name": "lr_1.mp4",
+          "prompt": "Start with a 2D atomic, electron point, or structural diagram of methane and generate a smooth scientific animation that transforms them into a clear 3D geometric model of methane.",
+          "model": "Kling V3"
+        },
+        {
+          "video_name": "lr_2.mp4",
+          "prompt": "Use the input image as the first frame to solve the problem and give the solution process.",
+          "model": "Seedance 2.0"
+        },
+        {
+          "video_name": "lr_3.mp4",
+          "prompt": "The picture shows the flame reaction of various metals, showing the subsequent process of this experiment.",
+          "model": "Wan 2.6"
+        }
+      ]
+    },
+    {
+      "category": "WorldKnowledge",
+      "videos": [
+        {
+          "video_name": "wk_1.mp4",
+          "prompt": "These are two domino chains that have already started to fall; show how both groups topple.",
+          "model": "Seedance 2.0"
+        },
+        {
+          "video_name": "wk_2.mp4",
+          "prompt": "The pencil is placed in water; what happens?",
+          "model": "Seedance 2.0"
+        },
+        {
+          "video_name": "wk_3.mp4",
+          "prompt": "When the person releases both objects in their hands at the same time, What will happen next?",
+          "model": "Wan 2.6"
+        }
+      ]
+    }
+  ]
+}
