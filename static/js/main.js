@@ -297,7 +297,7 @@
   const grid = document.getElementById('video-grid');
   const videoExpandBtn = document.getElementById('video-expand-btn');
   const videosPerDimension = 18;
-  const collapsedVideoCount = 3;
+  const collapsedVideoCount = 9;
   const promptToggleLabel = (expanded) => expanded ? 'Collapse prompt' : 'Show full prompt';
 
   function syncPromptToggles() {
