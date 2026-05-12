@@ -18,23 +18,23 @@
     },
     {
       "video_name": "lr_4.mp4",
-      "prompt": "---",
-      "model": "---"
+      "prompt": "Please use the tools in the picture to complete the experiment of photosynthesis producing oxygen.",
+      "model": "Wan 2.6"
     },
     {
       "video_name": "lr_5.mp4",
-      "prompt": "---",
-      "model": "---"
+      "prompt": "Use the input image as the first frame to solve the problem and give the solution process.",
+      "model": "Wan 2.6"
     },
     {
       "video_name": "lr_6.mp4",
-      "prompt": "---",
-      "model": "---"
+      "prompt": "Show the process of how the character in the picture can pass through the 2-meter-high and 1-meter-wide door holding the 3-meter-long bamboo pole. If he cannot pass, put the bamboo pole on the ground.",
+      "model": "Wan 2.6"
     },
     {
       "video_name": "lr_7.mp4",
-      "prompt": "---",
-      "model": "---"
+      "prompt": "Please calculate the space utilization of the three structures based on the information in the picture.",
+      "model": "Hunyuan 1.5"
     },
     {
       "video_name": "lr_8.mp4",
