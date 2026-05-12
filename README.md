@@ -3,7 +3,7 @@
 > Can a video generator **reason** about how the world should evolve — not just **render** it?
 
 <p align="center">
-  <b>436 cases &nbsp;·&nbsp; 4 reasoning dimensions &nbsp;·&nbsp; 22 subcategories &nbsp;·&nbsp; 11 generators &nbsp;·&nbsp; ~6K expert preference pairs</b>
+  <b>436 cases &nbsp;·&nbsp; 4 reasoning dimensions &nbsp;·&nbsp; 22 subcategories &nbsp;·&nbsp; 13 generators &nbsp;·&nbsp; ~6K expert preference pairs</b>
 </p>
 
 <div align="center">
