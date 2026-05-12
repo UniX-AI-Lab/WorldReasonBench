@@ -1,6 +1,18 @@
-# WorldReasonBench
+# WorldReasonBench: Human-Aligned Stress Testing of Video Generators as Future World-State Predictors
 
 A comprehensive evaluation framework for assessing world-model reasoning in video generation models. WorldReasonBench evaluates whether generated videos demonstrate genuine understanding of physical laws, causal reasoning, temporal dynamics, and world knowledge through a two-pillar approach: (1) process-aware QA-based reasoning verification and (2) multi-dimensional quality assessment.
+
+<div align="center">
+
+[![arXiv](https://img.shields.io/badge/Paper-000000?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2605.10434)
+[![Website](https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=google-chrome&logoColor=white)](https://unix-ai-lab.github.io/WorldReasonBench/)
+[![GitHub](https://img.shields.io/badge/Code-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/UniX-AI-Lab/WorldReasonBench)
+[![Data](https://img.shields.io/badge/Data-0040A1?style=for-the-badge&logo=huggingface&logoColor=ffffff)](https://huggingface.co/datasets/WorldReasonBench)
+[![Daily Paper](https://img.shields.io/badge/Daily_Paper-FFD21E?style=for-the-badge&logo=huggingface&logoColor=000000)](https://huggingface.co/papers/2605.10434)
+
+</div>
+
+---
 
 ## Directory Structure
 
@@ -149,15 +161,21 @@ python3 evaluation/reward_bench/compute_pointwise_metrics.py \
 
 ## Citation
 
+If you find this project helpful, please consider giving us a star and citing
+our paper with:
+
 ```bibtex
-@inproceedings{worldreasonbench2026,
-  title={WorldReasonBench: Evaluating World-Model Reasoning in Video Generation},
-  author={},
-  booktitle={NeurIPS 2026 Datasets and Benchmarks Track},
-  year={2026}
+@misc{wu2026worldreasonbenchhumanalignedstresstesting,
+      title={WorldReasonBench: Human-Aligned Stress Testing of Video Generators as Future World-State Predictors}, 
+      author={Keming Wu and Yijing Cui and Wenhan Xue and Qijie Wang and Xuan Luo and Zhiyuan Feng and Zuhao Yang and Sudong Wang and Sicong Jiang and Haowei Zhu and Zihan Wang and Ping Nie and Wenhu Chen and Bin Wang},
+      year={2026},
+      eprint={2605.10434},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.10434}, 
 }
 ```
 
 ## License
 
-TBD
+This project is released under the [MIT License](LICENSE).
