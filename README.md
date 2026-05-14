@@ -403,14 +403,11 @@ If you find this project helpful, please consider giving us a star and citing
 our paper with:
 
 ```bibtex
-@misc{wu2026worldreasonbenchhumanalignedstresstesting,
-      title={WorldReasonBench: Human-Aligned Stress Testing of Video Generators as Future World-State Predictors}, 
-      author={Keming Wu and Yijing Cui and Wenhan Xue and Qijie Wang and Xuan Luo and Zhiyuan Feng and Zuhao Yang and Sudong Wang and Sicong Jiang and Haowei Zhu and Zihan Wang and Ping Nie and Wenhu Chen and Bin Wang},
-      year={2026},
-      eprint={2605.10434},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2605.10434}, 
+@article{wu2026worldreasonbench,
+  title={WorldReasonBench: Human-Aligned Stress Testing of Video Generators as Future World-State Predictors},
+  author={Wu, Keming and Cui, Yijing and Xue, Wenhan and Wang, Qijie and Luo, Xuan and Feng, Zhiyuan and Yang, Zuhao and Wang, Sudong and Jiang, Sicong and Zhu, Haowei and others},
+  journal={arXiv preprint arXiv:2605.10434},
+  year={2026}
 }
 ```
 
