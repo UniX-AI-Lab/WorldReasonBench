@@ -413,4 +413,6 @@ our paper with:
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+This project is released under the [MIT License](LICENSE). 
+
+**WorldReasonBench is released for non-commercial academic research only. Copyright of all source images belongs to their original owners. Generated videos are produced by third-party models for evaluation only and do not reflect the views of the authors. If you believe any content infringes upon your rights, please contact wukm25@mails.tsinghua.edu.cn; we will remove it immediately upon verification. Without prior approval, you may not redistribute, modify, or commercially use WorldReasonBench in whole or in part. By downloading or using the benchmark, you agree to comply with these terms.**
