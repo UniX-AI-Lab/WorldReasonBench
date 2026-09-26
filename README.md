@@ -1,5 +1,9 @@
 # WorldReasonBench: Human-Aligned Stress Testing of Video Generators as Future World-State Predictors
 
+<p align="center">
+  🏆 <b>Accepted to NeurIPS 2026 · Evaluations &amp; Datasets Track</b>
+</p>
+
 > Can a video generator **reason** about how the world should evolve — not just **render** it?
 
 <p align="center">
@@ -403,10 +407,10 @@ If you find this project helpful, please consider giving us a star and citing
 our paper with:
 
 ```bibtex
-@article{wu2026worldreasonbench,
+@inproceedings{wu2026worldreasonbench,
   title={WorldReasonBench: Human-Aligned Stress Testing of Video Generators as Future World-State Predictors},
   author={Wu, Keming and Cui, Yijing and Xue, Wenhan and Wang, Qijie and Luo, Xuan and Feng, Zhiyuan and Yang, Zuhao and Wang, Sudong and Jiang, Sicong and Zhu, Haowei and others},
-  journal={arXiv preprint arXiv:2605.10434},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS), Evaluations and Datasets Track},
   year={2026}
 }
 ```
